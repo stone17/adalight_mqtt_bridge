@@ -1,0 +1,26 @@
+services:
+  mqtt-led:
+    build: .
+    container_name: mqtt-led
+    restart: unless-stopped
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+    environment:
+      # MQTT SETTINGS
+      - MQTT_BROKER=192.168.0.1     # <--- UPDATE THIS
+      - MQTT_PORT=1883
+      - MQTT_USER=homeassistant     # <--- Optional
+      - MQTT_PASS=""                # <--- Optional
+      
+      # HARDWARE SETTINGS
+      - SERIAL_PORT=/dev/ttyUSB0   # <--- UPDATE THIS
+      - BAUD_RATE=115200           # Try 500000 if slow
+      - LED_COUNT=176
+      
+      # DEFAULTS (Your preferred color/brightness)
+      - DEFAULT_COLOR=705230       # Hex color (Warm/Gold)
+      - DEFAULT_BRIGHTNESS=80      # 0-255
+      
+      # HA DISCOVERY
+      - DEVICE_NAME=Ambi Back Light
+      - UNIQUE_ID=mqtt_led_main
